@@ -1,8 +1,10 @@
 # Makefile.am -- automake configuration file for demos
 #
 # Copyright (C) 2012 Embecosm Limited
+# Copyright (C) 2012 Omer Kilic
 #
 # Contributor Jeremy Bennett <jeremy.bennett@embecosm.com>
+# Contributor Omer Kilic <omerkilic@gmail.com>
 #
 # This file is part of pihwm.
 #
@@ -25,13 +27,19 @@
 
 
 # Build a set of demos and a library.
-bin_PROGRAMS = gpio_int       \
+bin_PROGRAMS = board_info \
+	       gpio_int       \
 	       gpio_test      \
 	       i2c_ads1015    \
 	       i2c_hmc6352    \
 	       i2c_mcp23017   \
 	       pwm_demo       \
+			 spi_test		 \
 	       spi_bb_mcp3202
+
+# Board info demo
+board_info_SOURCES = board_info.c
+board_info_LDADD   = ../lib/libpihwm.la -lpthread
 
 # GPIO interrupt demo
 gpio_int_SOURCES = gpio_int.c
@@ -57,6 +65,10 @@ i2c_mcp23017_LDADD   = ../lib/libpihwm.la -lpthread
 pwm_demo_SOURCES = pwm_demo.c
 pwm_demo_LDADD   = ../lib/libpihwm.la -lpthread
 
-# SPI demo
+# Bitbanged SPI demo
 spi_bb_mcp3202_SOURCES = spi_bb_mcp3202.c
 spi_bb_mcp3202_LDADD   = ../lib/libpihwm.la -lpthread
+
+# SPI loopback test
+spi_test_SOURCES = spi_test.c
+spi_test_LDADD   = ../lib/libpihwm.la -lpthread
