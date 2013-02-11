@@ -91,16 +91,19 @@
 
 
 /* I/O access */
-volatile unsigned *gpio;
-volatile unsigned *pwm;
-volatile unsigned *clk;
+
+// Range for the PWM module
+const unsigned int PWM_MAX = 1024;
 
 
-void setup_io ();
-void restore_io ();
-void setup_pwm ();
-void set_pwm (int v);
-void force_pwm (int v, int mode);
-void pwm_off ();
+// FIXME: Remove these?
+volatile unsigned int *gpio;
+volatile unsigned int *pwm;
+volatile unsigned int *clk;
+
+int pwm_init ();
+void pwm_mode (unsigned int mode);
+void pwm_value (unsigned int value);
+void pwm_release ();
 
 #endif

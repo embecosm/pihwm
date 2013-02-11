@@ -1,4 +1,4 @@
-/* pi_i2c.c -- i2c library function implementation.
+/* pi_i2c.c -- I2C library function implementation.
 
    Copyright (C) 2012 Omer Kilic
    Copyright (C) 2012 Embecosm Limited
@@ -36,9 +36,35 @@
 #include "pihwm.h"
 #include "pi_i2c.h"
 
+int
+i2c_init()
+{
+  int rev;
+
+	if ( check_kernel_module("i2c_dev") < 0 ){
+      debug ("[%s] Kernel module \"i2c_dev\" not loaded.\n", __func__);
+		return -1;
+  	}
+
+	if ( check_kernel_module("i2c_bcm2708") < 0 ){
+      debug ("[%s] Kernel module \"i2c_bcm2708\" not loaded.\n", __func__);
+		return -1;
+  	}
+
+  rev = board_rev();
+
+  if ( rev == REV_1 ){
+    return i2c_init_name("/dev/i2c-0");
+  } else if ( rev == REV_2 ) {
+    return i2c_init_name("/dev/i2c-1");
+  } else {
+    return -1;
+  }
+
+}
 
 int
-i2c_init (char *devname)
+i2c_init_name (char *devname)
 {
   int fd = open (devname, O_RDWR);
 

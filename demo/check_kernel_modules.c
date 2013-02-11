@@ -1,4 +1,4 @@
-/* pi_spi.h -- SPI library headers.
+/* check_kernel_modules.c
 
    Copyright (C) 2012 Omer Kilic
 
@@ -19,27 +19,43 @@
    You should have received a copy of the GNU General Public License along
    with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-#ifndef PI_SPI_H
-#define PI_SPI_H
+#include <stdio.h>
+#include "pihwm.h"
 
-#include <linux/spi/spidev.h>
-#include <inttypes.h>
+int main()
+{
 
-// Default config for the SPI module
-#define SPI_DEFAULT_MODE	0	
-#define SPI_DEFAULT_BPW		8
-#define SPI_DEFAULT_SPEED	1000000
-#define SPI_DEFAULT_DELAY	10
+	printf("Kernel Modules:\n");
 
-// Function Prototypes
-int spi_init (uint8_t channel);
+	printf("spi_bcm2708\t");
+	if ( check_kernel_module("spi_bcm2708") > 0 ){
+		printf("OK\n");
+	} else {
+		printf("Not loaded!\n");
+	} 
+	
+	printf("i2c_bcm2708\t");
+	if ( check_kernel_module("i2c_bcm2708") > 0 ){
+		printf("OK\n");
+	} else {
+		printf("Not loaded!\n");
+	} 
+	
+	printf("spidev\t\t");
+	if ( check_kernel_module("spidev") > 0 ){
+		printf("OK\n");
+	} else {
+		printf("Not loaded!\n");
+	} 
+	
+	printf("i2c_dev\t\t");
+	if ( check_kernel_module("i2c_dev") > 0 ){
+		printf("OK\n");
+	} else {
+		printf("Not loaded!\n");
+	}
 
-int spi_config (int fd, uint8_t mode, uint8_t bits,
-					 uint32_t speed, uint16_t delay);
+	return 0;
 
-int spi_config_default (int fd);
+}
 
-int spi_transfer (int fd, uint8_t txbuf[], uint8_t rxbuf[],
-					 	uint8_t len);
-
-#endif

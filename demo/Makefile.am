@@ -28,14 +28,20 @@
 
 # Build a set of demos and a library.
 bin_PROGRAMS = board_info \
+          check_kernel_modules \
 	       gpio_int       \
 	       gpio_test      \
+			 gpio_ledborg   \
 	       i2c_ads1015    \
 	       i2c_hmc6352    \
 	       i2c_mcp23017   \
 	       pwm_demo       \
 			 spi_test		 \
 	       spi_bb_mcp3202
+
+# Kernel modules test
+check_kernel_modules_SOURCES = check_kernel_modules.c
+check_kernel_modules_LDADD   = ../lib/libpihwm.la -lpthread
 
 # Board info demo
 board_info_SOURCES = board_info.c
@@ -48,6 +54,10 @@ gpio_int_LDADD   = ../lib/libpihwm.la -lpthread
 # Baseline GPIO demo
 gpio_test_SOURCES = gpio_test.c
 gpio_test_LDADD   = ../lib/libpihwm.la -lpthread
+
+# LedBorg demo
+gpio_ledborg_SOURCES = gpio_ledborg.c
+gpio_ledborg_LDADD   = ../lib/libpihwm.la -lpthread
 
 # ADS1015 i2c demo
 i2c_ads1015_SOURCES = i2c_ads1015.c
